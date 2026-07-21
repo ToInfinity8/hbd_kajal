@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="stars-bg" aria-hidden="true"></div>
+<div class="glow-blobs" aria-hidden="true">
+  <span class="blob blob-1"></span>
+  <span class="blob blob-2"></span>
+  <span class="blob blob-3"></span>
+</div>
+<div class="balloons-bg" id="balloons-bg" aria-hidden="true"></div>
+
+<canvas id="fx-canvas"></canvas>
+
+<!-- SCENE 0: Loading -->
+<section id="scene-loading" class="scene active">
+  <div class="loader-content">
+    <div class="loader-spinner"></div>
+    <p class="loader-text">Something special is waiting<span class="dots">...</span></p>
+  </div>
+</section>
+
+<!-- SCENE 1: Landing -->
+<section id="scene-landing" class="scene">
+  <div class="landing-content">
+    <h1 class="title-cake">🎂</h1>
+    <h1 id="landing-title" class="script-font">Happy Birthday, <span id="recipient-name">Kajal</span>!</h1>
+    <p class="sparkle-line">✨ Click anywhere to begin ✨</p>
+  </div>
+</section>
+
+<!-- SCENE 2: Welcome -->
+<section id="scene-welcome" class="scene">
+  <div class="panel">
+    <h2>Hi <span class="recipient-name-inline">Kajal</span> 💛</h2>
+    <p id="welcome-message" class="typewriter"></p>
+    <div class="years-counter-wrap">
+      <div class="know-counters">
+        <div class="know-unit"><span id="know-years" class="know-num">0</span><span class="know-unit-label">years</span></div>
+        <div class="know-unit"><span id="know-months" class="know-num">0</span><span class="know-unit-label">months</span></div>
+        <div class="know-unit"><span id="know-days" class="know-num">0</span><span class="know-unit-label">days</span></div>
+        <div class="know-unit"><span id="know-mins" class="know-num">0</span><span class="know-unit-label">mins</span></div>
+      </div>
+      <p class="years-label">and some precious secs of knowing an awesome person 💛</p>
+    </div>
+    <button class="next-btn" data-next="scene-memories">Next →</button>
+  </div>
+</section>
+
+<!-- SCENE 3: Memories -->
+<section id="scene-memories" class="scene">
+  <div class="panel">
+    <h2>Favorite Memories 📸</h2>
+    <div class="memory-viewer">
+      <button class="mem-arrow" id="mem-prev" aria-label="Previous">‹</button>
+      <div class="memory-card">
+        <img id="memory-img" src="" alt="Memory photo" onerror="this.onerror=null;this.src='images/placeholder.svg'">
+        <p id="memory-caption" class="memory-caption"></p>
+      </div>
+      <button class="mem-arrow" id="mem-next" aria-label="Next">›</button>
+    </div>
+    <div class="mem-dots" id="mem-dots"></div>
+    <button class="next-btn" data-next="scene-reasons">Next →</button>
+  </div>
+</section>
+
+<!-- SCENE 4: Reasons -->
+<section id="scene-reasons" class="scene">
+  <div class="panel">
+    <h2>Reasons You're Awesome ❤️</h2>
+    <p class="hint-text">(tap a card to flip it)</p>
+    <div id="reasons-grid" class="reasons-grid"></div>
+    <button class="next-btn" data-next="scene-cake">Next →</button>
+  </div>
+</section>
+
+<!-- SCENE 6: Cake -->
+<section id="scene-cake" class="scene">
+  <div class="panel">
+    <h2>Make a wish! 🌟</h2>
+    <p class="hint-text">Blow into your mic, or tap the candles / button below</p>
+    <div class="cake-wrap">
+      <div class="candles" id="candles-row"></div>
+      <div class="cake">
+        <div class="cherry">🍒</div>
+        <div class="cake-tier cake-tier-top"></div>
+        <div class="drip"></div>
+        <div class="cake-tier cake-tier-bottom"></div>
+        <div class="cake-plate"></div>
+      </div>
+    </div>
+    <button class="next-btn" id="blow-btn">🌬️ Blow out the candles</button>
+    <p id="mic-status" class="mic-status"></p>
+  </div>
+</section>
+
+<!-- SCENE 7: Final -->
+<section id="scene-final" class="scene">
+  <div class="panel final-panel">
+    <h1 class="script-font">Happy Birthday ❤️</h1>
+    <p class="final-message">
+      Hope this year brings you everything<br>
+      you've wished for.
+    </p>
+    <p class="signoff" id="signoff-text">— From Me</p>
+    <button class="next-btn" id="replay-btn">Replay ↺</button>
+  </div>
+</section>
+
+<button id="mute-btn" class="mute-btn" title="Toggle sound">🔊</button>
+<audio id="bg-music" loop></audio>
+
+<script src="script.js"></script>
+</body>
+</html>
