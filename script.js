@@ -577,13 +577,19 @@ function startMicListener(statusEl, onBlow) {
     .then((stream) => {
       statusEl.textContent = "🎤 Mic ready — go ahead and blow!";
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      // Safari (and some other browsers) can hand back a freshly-created
+      // AudioContext in a "suspended" state even right after a permission
+      // grant — the analyser then silently reads all zeros forever, so
+      // blowing visibly does nothing even though the mic is "ready".
+      // Explicitly resuming it is required to actually start capturing.
+      ctx.resume();
       const source = ctx.createMediaStreamSource(stream);
       const analyser = ctx.createAnalyser();
       analyser.fftSize = 512;
       source.connect(analyser);
 
       const data = new Uint8Array(analyser.frequencyBinCount);
-      const THRESHOLD = 55;
+      const THRESHOLD = 40;
       const SUSTAIN_MS = 350;
       let loudSince = null;
       let stopped = false;
