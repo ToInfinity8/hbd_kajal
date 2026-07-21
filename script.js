@@ -452,6 +452,17 @@ function setupMemories() {
   });
 
   render();
+  // Warm the browser cache for the rest of the photos in the background,
+  // so by the time you click prev/next they're already downloaded instead
+  // of fetching a multi-hundred-KB image over the network on every click.
+  memories.forEach((_, i) => preloadMemoryImage(i + 1, 0));
+}
+
+function preloadMemoryImage(num, extIndex) {
+  if (extIndex >= MEMORY_IMAGE_EXTENSIONS.length) return;
+  const img = new Image();
+  img.onerror = () => preloadMemoryImage(num, extIndex + 1);
+  img.src = `images/memory${num}.${MEMORY_IMAGE_EXTENSIONS[extIndex]}`;
 }
 
 // Tries images/memoryN.jpg, then .jpeg/.png/.webp, then falls back to
@@ -466,7 +477,7 @@ function loadMemoryImage(imgEl, num, extIndex) {
     return;
   }
   imgEl.onerror = () => loadMemoryImage(imgEl, num, extIndex + 1);
-  imgEl.src = `images/memory${num}.${MEMORY_IMAGE_EXTENSIONS[extIndex]}?_=${Date.now()}`;
+  imgEl.src = `images/memory${num}.${MEMORY_IMAGE_EXTENSIONS[extIndex]}`;
 }
 
 /* ---------------------------------------------------------------------
